@@ -39,10 +39,16 @@
   // last element.
   _.last = function(array, n) {
     var results = [];
-    if (n === 0) return [];
-    if (!n) return array[array.length - 1];
-    if (n >= array.length) return array;
-    for (var idx = array.length - n; idx < array.length; idx++){
+    if (n === 0) {
+      return [];
+    }
+    if (!n) {
+      return array[array.length - 1];
+    }
+    if (n >= array.length) {
+      return array;
+    } 
+    for (var idx = array.length - n; idx < array.length; idx++) {
       results.push(array[idx]);
     }
     return results;
@@ -55,10 +61,10 @@
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
     if (Array.isArray(collection)) {
-      for (var idx = 0; idx < collection.length; idx++){
+      for (var idx = 0; idx < collection.length; idx++) {
         iterator(collection[idx], idx, collection);
       }
-    } else if (typeof collection === "object") {
+    } else if (typeof collection === 'object') {
       for (var key in collection) {
         iterator(collection[key], key, collection);
       }
@@ -85,9 +91,9 @@
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
     var results = [];
-    _.each(collection, function(element){
-      if (test(element)){
-        results.push(element)
+    _.each(collection, function(element) {
+      if (test(element)) {
+        results.push(element);
       }
     });
     return results;
@@ -95,56 +101,81 @@
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
-    var results = _.filter(collection, function(element){
-      return !test(element)
+    var results = _.filter(collection, function(element) {
+      return !test(element);
     });
-    return results
+    return results;
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
-    var iteratedUniqs = [];
-    var final = [];
-    var uniqs = [];
-
-    var findUniqs = function(array){
-      var uniqs = [];
-      for (var idx = 0; idx < array.length; idx++){
-        if (array[idx][0]){ 
-            if (!uniqs.includes(array[idx][0])) uniqs.push(array[idx])
-        } else {
-          if (!uniqs.includes(array[idx])) uniqs.push(array[idx])
-        }
-      
-      }
-      console.log("uniqs" + uniqs)
-    return uniqs;
+    if (!iterator) {
+      iterator = _.identity;
     }
-
-    if (isSorted){ 
-      if (iterator) { // sorted, iterator
-        var iterated = array.map(function(element, index){
-          return [iterator(element), index]
-        });
-       // console.log(iterated)
-        var uniqIndices = findUniqs(iterated)
-        //console.log(uniqIndices)
-       
-      } else { // sorted, no iterator
-        for (var idx  = 0; idx < array.length; idx++){
-          if (array[idx + 1]){
-            if (array[idx] != array[idx + 1]){ 
-              uniqs.push(array[idx])
-            }
-          } else {
-            uniqs.push(array[array.length-1])
+    if (isSorted) {
+      var results = [];
+      for (var i = 0; i < array.length; i++) {
+        if (array[i - 1]) {
+          if (iterator(array[i]) !== iterator(array[i - 1])) {
+            results.push(array[i]);
           }
+        } else {
+          results.push(array[i]);
         }
       }
-    } else { // unsorted, no iterator
-      return findUniqs(array);
+      //results.push(array[array.length - 1]);
+      return results;
+    } else {
+      var resObj = {};
+      _.each(array, function(value, key, array) {
+
+      });
     }
-    return iteratedUniqs;
+
+
+
+    // var iteratedUniqs = [];
+    // var final = [];
+    // var uniqs = [];
+
+    // var findUniqs = function(array){
+    //   var uniqs = [];
+    //   for (var idx = 0; idx < array.length; idx++){
+    //     if (array[idx][0]){ 
+    //         if (!uniqs.includes(array[idx][0])) uniqs.push(array[idx])
+    //     } else {
+    //       if (!uniqs.includes(array[idx])) uniqs.push(array[idx])
+    //     }
+      
+    //   }
+    //   console.log("uniqs" + uniqs)
+    // return uniqs;
+    // }
+
+    // if (isSorted){ 
+    //   if (iterator) { // sorted, iterator
+    //     var iterated = array.map(function(element, index){
+    //       return [iterator(element), index]
+    //     });
+    //    // console.log(iterated)
+    //     var uniqIndices = findUniqs(iterated)
+    //     //console.log(uniqIndices)
+       
+    //   } else { // sorted, no iterator
+    //     for (var idx  = 0; idx < array.length; idx++){
+    //       if (array[idx + 1]){
+    //         if (array[idx] != array[idx + 1]){ 
+    //           uniqs.push(array[idx])
+    //         }
+    //       } else {
+    //         uniqs.push(array[array.length-1])
+    //       }
+    //     }
+    //   }
+    // } else { // unsorted, no iterator
+    //   return findUniqs(array);
+    // }
+    // return iteratedUniqs;
   };
 
 
