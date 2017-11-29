@@ -376,7 +376,7 @@
       });
 
       it('should apply a function to every value in an array', function() {
-        var multiplyByTwo = function(n){
+        var multiplyByTwo = function(n) {
           return n * 2;
         };
 
