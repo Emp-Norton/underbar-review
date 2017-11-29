@@ -123,13 +123,17 @@
           results.push(array[i]);
         }
       }
-      //results.push(array[array.length - 1]);
       return results;
     } else {
       var resObj = {};
       _.each(array, function(value, key, array) {
-
+        resObj[value] = value;
       });
+      var resArray = [];
+      for (var key in resObj) {
+        resArray.push(resObj[key]);
+      }
+      return resArray;
     }
 
 
