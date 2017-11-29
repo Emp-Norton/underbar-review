@@ -143,7 +143,7 @@
 
   _.map = function(collection, iterator) {
     var result = [];
-    _.each(collection, function(n){
+    _.each(collection, function(n) {
       result.push(iterator(n));
     });
 
@@ -222,7 +222,14 @@
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
-    // TIP: Try re-using reduce() here.
+    iterator = iterator || _.identity;
+    return Boolean(_.reduce(collection, function(memo, value) {
+      if (memo) {
+        return iterator(value);
+      } else {
+        return false; 
+      }
+    }, true));   
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
