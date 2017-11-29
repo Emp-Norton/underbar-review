@@ -135,56 +135,18 @@
       }
       return resArray;
     }
-
-
-
-    // var iteratedUniqs = [];
-    // var final = [];
-    // var uniqs = [];
-
-    // var findUniqs = function(array){
-    //   var uniqs = [];
-    //   for (var idx = 0; idx < array.length; idx++){
-    //     if (array[idx][0]){ 
-    //         if (!uniqs.includes(array[idx][0])) uniqs.push(array[idx])
-    //     } else {
-    //       if (!uniqs.includes(array[idx])) uniqs.push(array[idx])
-    //     }
-      
-    //   }
-    //   console.log("uniqs" + uniqs)
-    // return uniqs;
-    // }
-
-    // if (isSorted){ 
-    //   if (iterator) { // sorted, iterator
-    //     var iterated = array.map(function(element, index){
-    //       return [iterator(element), index]
-    //     });
-    //    // console.log(iterated)
-    //     var uniqIndices = findUniqs(iterated)
-    //     //console.log(uniqIndices)
-       
-    //   } else { // sorted, no iterator
-    //     for (var idx  = 0; idx < array.length; idx++){
-    //       if (array[idx + 1]){
-    //         if (array[idx] != array[idx + 1]){ 
-    //           uniqs.push(array[idx])
-    //         }
-    //       } else {
-    //         uniqs.push(array[array.length-1])
-    //       }
-    //     }
-    //   }
-    // } else { // unsorted, no iterator
-    //   return findUniqs(array);
-    // }
-    // return iteratedUniqs;
   };
 
 
   // Return the results of applying an iterator to each element.
+
   _.map = function(collection, iterator) {
+    var result = [];
+    _.each(collection, function(n){
+      result.push(iterator(n));
+    });
+
+    return result;
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
