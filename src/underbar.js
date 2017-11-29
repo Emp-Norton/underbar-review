@@ -125,6 +125,7 @@
       }
       return results;
     } else {
+      //
       var resObj = {};
       _.each(array, function(value, key, array) {
         resObj[value] = value;
@@ -135,51 +136,6 @@
       }
       return resArray;
     }
-
-
-
-    // var iteratedUniqs = [];
-    // var final = [];
-    // var uniqs = [];
-
-    // var findUniqs = function(array){
-    //   var uniqs = [];
-    //   for (var idx = 0; idx < array.length; idx++){
-    //     if (array[idx][0]){ 
-    //         if (!uniqs.includes(array[idx][0])) uniqs.push(array[idx])
-    //     } else {
-    //       if (!uniqs.includes(array[idx])) uniqs.push(array[idx])
-    //     }
-      
-    //   }
-    //   console.log("uniqs" + uniqs)
-    // return uniqs;
-    // }
-
-    // if (isSorted){ 
-    //   if (iterator) { // sorted, iterator
-    //     var iterated = array.map(function(element, index){
-    //       return [iterator(element), index]
-    //     });
-    //    // console.log(iterated)
-    //     var uniqIndices = findUniqs(iterated)
-    //     //console.log(uniqIndices)
-       
-    //   } else { // sorted, no iterator
-    //     for (var idx  = 0; idx < array.length; idx++){
-    //       if (array[idx + 1]){
-    //         if (array[idx] != array[idx + 1]){ 
-    //           uniqs.push(array[idx])
-    //         }
-    //       } else {
-    //         uniqs.push(array[array.length-1])
-    //       }
-    //     }
-    //   }
-    // } else { // unsorted, no iterator
-    //   return findUniqs(array);
-    // }
-    // return iteratedUniqs;
   };
 
 
@@ -229,6 +185,19 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
+    var hasAccumulator = true;
+    if (accumulator === undefined) {
+      hasAccumulator = false;
+    }
+    _.each(collection, function(value, key, collection) {
+      if (!hasAccumulator) {
+        accumulator = value;
+        hasAccumulator = true;
+      } else {
+        accumulator = iterator(accumulator, value);
+      }
+    });    
+    return accumulator;
   };
 
   // Determine if the array or object contains a given value (using `===`).
