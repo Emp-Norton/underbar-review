@@ -187,9 +187,10 @@
       });
 
       it('should override properties found on the destination', function() {
+        var extended = _.extend({a: 1, b: 2}, {a: 3});
         // Replace this line with an `expect` statement that tests
         // the behavior described by the `it` string
-        throw new Error('This test is missing.');
+        expect(extended.a).to.equal(3);
       });
 
       it('should not override properties not found in the source', function() {
@@ -267,7 +268,9 @@
       it('should copy any property whose key is not already set on the target', function() {
         // Replace this line with an `expect` statement that tests
         // the behavior described by the `it` string
-        throw new Error('This test is missing.');
+        var obj = {'a': 1};
+        var obj2 = {'b': 2};
+        expect(_.defaults(obj, obj2)).to.eql({'a': 1, 'b': 2});
       });
 
       it('should not copy a property if that key is already set on the target', function() {

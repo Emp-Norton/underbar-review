@@ -261,11 +261,32 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+    var args = Array.from(arguments);
+    for (var i = 1; i < args.length; i++) {
+      for (var key in args[i]) {
+        obj[key] = args[i][key];
+      }
+    }
+    return obj;
+    //console.log(JSON.stringify(args))
+    //grab the new objects from arguments
+    //for every key value pair in the new objects
+      //push to input obj
+    //return obj
   };
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    var args = Array.from(arguments);
+    for (var i = 1; i < args.length; i++) {
+      for (var key in args[i]) {
+        if (!obj.hasOwnProperty(key)) {
+          obj[key] = args[i][key];
+        }
+      }
+    }
+    return obj;
   };
 
 
@@ -309,6 +330,18 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    var key = arguments[0];
+    var cache = {};
+    
+    return function() {
+      var args = Array.from(arguments);
+      var stringifiedArgs = JSON.stringify(args);
+      if (!cache.hasOwnProperty(stringifiedArgs)) {
+        cache[stringifiedArgs] = func.apply(null, args);
+      } 
+      return cache[stringifiedArgs];
+    };
+    
   };
 
   // Delays a function for the given number of milliseconds, and then calls
@@ -318,7 +351,12 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    var argsWithoutFuncAndWait = Array.prototype.slice.call(arguments).slice(2); 
+    setTimeout(function() {
+      func.apply(null, argsWithoutFuncAndWait);
+    }, wait);
   };
+
 
 
   /**
@@ -332,6 +370,19 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    var dup = array.slice();
+    var result = [];
+    var randomInt = function() {
+      return Math.floor(Math.random() * (array.length));
+    };
+    while (result.length < array.length) { 
+      var idx = randomInt();
+      if (dup[idx]) {
+        result.push(dup[idx]);
+        delete (dup[idx]);
+      }
+    }
+    return result;
   };
 
 
